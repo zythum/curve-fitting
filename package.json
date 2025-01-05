@@ -2,6 +2,7 @@
   "name": "@zythum02/curve-fitting",
   "version": "1.0.1",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
     "test": "npx tsx test/test.ts",
