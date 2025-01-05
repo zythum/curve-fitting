@@ -10,6 +10,11 @@
   "author": "zythum02@gmail.com",
   "license": "ISC",
   "description": "Get curve fitting from discrete data with least squares method and Cramer's Rule.",
+  "keywords": [
+    "Curve fitting",
+    "Least squares",
+    "Cramer's Rule"
+  ],
   "peerDependencies": {
     "mathjs": "^14.0.0"
   },
