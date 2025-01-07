@@ -1,11 +1,17 @@
 import { MathType, fraction, equal, add, pow, multiply, isFraction } from 'mathjs';
 
-export function coefficientsToString(factors: MathType[]): string {
-  const pattern = factors.reduce((result, factor, index) => {
-    if (equal(factor, 0)) {
+/**
+ * Coefficients to String
+ * @param coefficients
+ * @returns
+ */
+export function coefficientsToString(coefficients: MathType[]): string {
+  const pattern = coefficients.reduce((result, coefficient, index) => {
+    if (equal(coefficient, 0)) {
       return result;
     }
-    const v = equal(factor, 1) ? '' : `(${isFraction(factor) ? factor.toFraction() : factor.toString()})`;
+    const f = isFraction(coefficient) ? coefficient : fraction(coefficient.toString());
+    const v = equal(f, 1) ? '' : `(${f.toFraction()})`;
     const x = index === 0 ? '' : index === 1 ? 'x' : `x^${index}`;
     const suffix = result ? ` + ${result}` : '';
 
@@ -14,13 +20,18 @@ export function coefficientsToString(factors: MathType[]): string {
   return `f(x) = ${pattern}`;
 }
 
-export function coefficientsToLaTeX(factors: MathType[]): string {
-  const pattern = factors.reduce((result, factor, index) => {
-    if (equal(factor, 0)) {
+/**
+ * Coefficients to LaTeX
+ * @param coefficients
+ * @returns
+ */
+export function coefficientsToLaTeX(coefficients: MathType[]): string {
+  const pattern = coefficients.reduce((result, coefficient, index) => {
+    if (equal(coefficient, 0)) {
       return result;
     }
-    const f = isFraction(factor) ? factor : fraction(factor.toString());
-    const v = f.toLatex();
+    const f = isFraction(coefficient) ? coefficient : fraction(coefficient.toString());
+    const v = equal(f, 1) ? '' : f.toLatex();
     const x = index === 0 ? '' : index === 1 ? 'x' : `x^${index}`;
     const suffix = `${result.length === 0 || result[0] === '-' ? '' : '+'}${result}`;
 
@@ -29,16 +40,26 @@ export function coefficientsToLaTeX(factors: MathType[]): string {
   return `f(x) = ${pattern}`;
 }
 
-export function coefficientsToMarkdown(factors: MathType[]): string {
-  return `$$ ${coefficientsToLaTeX(factors)} $$`;
+/**
+ * Coefficients to Markdown
+ * @param coefficients
+ * @returns
+ */
+export function coefficientsToMarkdown(coefficients: MathType[]): string {
+  return `$$ ${coefficientsToLaTeX(coefficients)} $$`;
 }
 
-export function coefficientsToFunction(factors: MathType[]): (value: MathType) => MathType {
+/**
+ * Coefficients to Function
+ * @param coefficients
+ * @returns
+ */
+export function coefficientsToFunction(coefficients: MathType[]): (value: MathType) => MathType {
   return value => {
     let v = fraction(value.toString());
     let result: MathType = fraction(0);
-    for (let i = 0; i < factors.length; i++) {
-      result = add(result, multiply(factors[i], pow(v, i)));
+    for (let i = 0; i < coefficients.length; i++) {
+      result = add(result, multiply(coefficients[i], pow(v, i)));
     }
     return result;
   }

@@ -10,7 +10,7 @@ import {
 // const x = [1, 2, 3, 4];
 // const y = [2, 4, 6, 8];
 
-const y = [1, -4, 9, -16];
+const y = [1, 4, 9, 16];
 const x = y.map((_, index) => index + 1);
 
 const data: CurveFittingData = {
